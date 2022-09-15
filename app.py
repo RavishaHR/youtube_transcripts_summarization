@@ -6,6 +6,7 @@ import json
 from urllib.parse import parse_qs, urlparse
 from transformers import pipeline
 from transformers import T5ForConditionalGeneration, T5Tokenizer
+from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 
 app = Flask(__name__)
@@ -69,24 +70,36 @@ def do_NLP(transcripts):
 
 
 
-    # initialize the model architecture and weights
-    model = T5ForConditionalGeneration.from_pretrained("t5-base")
-    # initialize the model tokenizer
-    tokenizer = T5Tokenizer.from_pretrained("t5-base")
-    inputs = tokenizer.encode("summarize: " + transcripts, return_tensors="pt", max_length=512, truncation=True)
-    # generate the summarization output
-    outputs = model.generate(
-        inputs, 
-        max_length=150, 
-        min_length=40, 
-        length_penalty=2.0, 
-        num_beams=4, 
-        early_stopping=True)
+    # # initialize the model architecture and weights
+    # model = T5ForConditionalGeneration.from_pretrained("t5-base")
+    # # initialize the model tokenizer
+    # tokenizer = T5Tokenizer.from_pretrained("t5-base")
+    # inputs = tokenizer.encode("summarize: " + transcripts, return_tensors="pt", max_length=512, truncation=True)
+    # # generate the summarization output
+    # outputs = model.generate(
+    #     inputs, 
+    #     max_length=150, 
+    #     min_length=40, 
+    #     length_penalty=2.0, 
+    #     num_beams=4, 
+    #     early_stopping=True)
 
-    # just for debugging
-    print(outputs)
-    summary_text = tokenizer.decode(outputs[0])
+    # # just for debugging
+    # print(outputs)
+    # summary_text = tokenizer.decode(outputs[0])
+    # print(summary_text)
+
+
+
+    model = AutoModelForSeq2SeqLM.from_pretrained("t5-base")
+    tokenizer = AutoTokenizer.from_pretrained("t5-base")
+    inputs = tokenizer("summarize: " + transcripts, return_tensors="pt", max_length=512, truncation=True)
+    outputs = model.generate(
+        inputs["input_ids"], max_length=150, min_length=40, length_penalty=2.0, num_beams=4, early_stopping=True
+    )
+    summary_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
     print(summary_text)
+
 
     return summary_text
 
