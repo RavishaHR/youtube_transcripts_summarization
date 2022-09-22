@@ -1,4 +1,5 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 from flask import request
 from datetime import datetime
 from youtube_transcript_api import YouTubeTranscriptApi
@@ -10,6 +11,7 @@ from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def index_page():
@@ -32,16 +34,16 @@ def get_transcripts():
     #Example:https://www.youtube.com/watch?v=Mus_vwhTCq0
     yt_url = request.args.get('youtube_url', '')
     yt_id = get_youtube_id(yt_url)[2:]
-    transcripts = handle_transcript(yt_id)
+    transcripts = handle_transcript(yt_id) #change
 
    
     #Summarize
-    summary = do_NLP(transcripts)
-    print(summary)
+    summary = do_NLP(transcripts) #change
+    #print(summary)
 
     #Return with HTTP Status OK and handle HTTP exceptions
-    
-    return str(summary)
+    #return ("ugh")
+    return str(summary) 
 
 
 

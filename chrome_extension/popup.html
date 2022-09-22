@@ -3,9 +3,33 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>aaaaa</title>
+	<title>YouTube Transcript Summary</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+	<link rel="stylesheet" href="./popup.css">
+
+	<script src="./popup.js"></script>
+	
+
 </head>
 <body>
-	<p>aaaaaaaaaaaaaaaaaaaaaaa</p>
+	<div class="card justify-content-center" style="width: 18rem;">
+		<div class="card-body">
+		  <h5 class="card-title">YouTube Transcript Summary</h5>
+		  <h6 class="card-subtitle mb-2 text-muted">Start summarizing</h6>
+		  <br>
+		  <button type="button" class="btn btn-info" id="summbutton" onclick="summFunc()">Summarize</button>
+		  <br><br>
+
+		  <p class="card-text" id="summ"></p>
+		  
+		
+		  
+		  
+		</div>
+	</div>
+
+	
+	
 </body>
 </html>
